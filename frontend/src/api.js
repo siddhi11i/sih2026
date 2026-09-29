@@ -1,6 +1,5 @@
-// Centralized API configuration supporting both Vite proxy and direct backend URL
 const isDev = import.meta.env.DEV;
-export const API_BASE = isDev ? '/api/v1' : '/api/v1';
+export const API_BASE = import.meta.env.VITE_API_BASE || '/api/v1';
 export const DIRECT_API_FALLBACK = 'http://localhost:8080/api/v1';
 
 export async function fetchApi(endpoint, options = {}) {
