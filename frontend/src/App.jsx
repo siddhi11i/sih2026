@@ -164,54 +164,73 @@ export default function App() {
   const handleExportDocx = async () => {
     try {
       const tenderQuery = query?.trim() || 'Food and Dairy BIS Standards Procurement Schedule';
-      const res = await fetch(`${API_BASE}/export/docx`, {
+      const url = `${API_BASE}/export/docx`;
+      const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tender: tenderQuery, top_k: 25 })
       });
       if (!res.ok) {
-        const errText = await res.text();
+        const errText = await res.text().catch(() => '');
         throw new Error(`DOCX export failed (${res.status}): ${errText || res.statusText}`);
       }
       const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
+      const blobUrl = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url;
+      a.href = blobUrl;
       a.download = "BIS_Standards_Annexure.docx";
       document.body.appendChild(a);
       a.click();
       a.remove();
-      setTimeout(() => window.URL.revokeObjectURL(url), 1000);
+      setTimeout(() => window.URL.revokeObjectURL(blobUrl), 2000);
     } catch (e) {
       console.error(e);
-      setErrorMessage(e.message);
+      setErrorMessage(`DOCX Export Error: ${e.message}`);
     }
   };
 
-  const handleExportCsv = async () => {
+  const handleExportCsv = () => {
     try {
-      const tenderQuery = query?.trim() || 'Food and Dairy BIS Standards Procurement Schedule';
-      const res = await fetch(`${API_BASE}/export/csv`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tender: tenderQuery, top_k: 25 })
-      });
-      if (!res.ok) {
-        const errText = await res.text();
-        throw new Error(`CSV export failed (${res.status}): ${errText || res.statusText}`);
+      const itemsToExport = results.length > 0 ? results : [];
+      if (itemsToExport.length === 0) {
+        alert("Please perform a search before exporting the CSV schedule.");
+        return;
       }
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
+
+      // Build CSV with UTF-8 BOM for full compatibility with Excel & Indian scripts
+      let csvRows = [];
+      csvRows.push(`"Procurement Query","${(query || 'BIS Standards Schedule').replace(/"/g, '""')}"`);
+      csvRows.push("");
+      csvRows.push(`"Rank","IS Number","Title","Year","Sector / Category","Match Percentage","Relevance Tier","Data Status","Why Matched"`);
+
+      itemsToExport.forEach((s, idx) => {
+        const whyMatchedStr = Array.isArray(s.why_matched) ? s.why_matched.join('; ') : (s.why_matched || '');
+        csvRows.push([
+          `"${idx + 1}"`,
+          `"${(s.is_number || '').replace(/"/g, '""')}"`,
+          `"${(s.title || '').replace(/"/g, '""')}"`,
+          `"${s.year || ''}"`,
+          `"${(s.category || '').replace(/"/g, '""')}"`,
+          `"${s.match_pct || 0}%"`,
+          `"${s.match_tier || ''}"`,
+          `"${s.data_status || 'REAL'}"`,
+          `"${whyMatchedStr.replace(/"/g, '""')}"`
+        ].join(','));
+      });
+
+      const csvString = '\uFEFF' + csvRows.join('\r\n');
+      const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+      const blobUrl = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url;
+      a.href = blobUrl;
       a.download = "BIS_Standards_Schedule.csv";
       document.body.appendChild(a);
       a.click();
       a.remove();
-      setTimeout(() => window.URL.revokeObjectURL(url), 1000);
+      setTimeout(() => window.URL.revokeObjectURL(blobUrl), 2000);
     } catch (e) {
       console.error(e);
-      setErrorMessage(e.message);
+      setErrorMessage(`CSV Export Error: ${e.message}`);
     }
   };
 
