@@ -41,14 +41,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# API v1 routes
-app.include_router(api_router, prefix=settings.API_V1_STR)
+# API routes
+app.include_router(api_router, prefix=settings.API_V1_STR) # /api/v1/...
+app.include_router(api_router, prefix="/api")               # /api/... (fallback)
 
 # Direct compatibility aliases for legacy endpoints
 from app.api.v1.standards import recommend_get, recommend_post, list_standards
 app.add_api_route("/api/recommend", recommend_post, methods=["POST"], include_in_schema=False)
 app.add_api_route("/api/recommend", recommend_get, methods=["GET"], include_in_schema=False)
+app.add_api_route("/recommend", recommend_post, methods=["POST"], include_in_schema=False)
+app.add_api_route("/recommend", recommend_get, methods=["GET"], include_in_schema=False)
 app.add_api_route("/api/standards", list_standards, methods=["GET"], include_in_schema=False)
+app.add_api_route("/standards", list_standards, methods=["GET"], include_in_schema=False)
 
 @app.get("/", tags=["Health"])
 @app.get("/health", tags=["Health"])

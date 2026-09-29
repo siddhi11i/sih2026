@@ -1,5 +1,18 @@
-const isDev = import.meta.env.DEV;
-export const API_BASE = import.meta.env.VITE_API_BASE || '/api/v1';
+function getApiBase() {
+  const envBase = import.meta.env.VITE_API_BASE;
+  if (!envBase) {
+    return '/api/v1';
+  }
+  let base = envBase.trim().replace(/\/+$/, '');
+  if (!base.endsWith('/api/v1') && !base.endsWith('/api')) {
+    base = `${base}/api/v1`;
+  } else if (base.endsWith('/api')) {
+    base = `${base}/v1`;
+  }
+  return base;
+}
+
+export const API_BASE = getApiBase();
 export const DIRECT_API_FALLBACK = 'http://localhost:8080/api/v1';
 
 export async function fetchApi(endpoint, options = {}) {
