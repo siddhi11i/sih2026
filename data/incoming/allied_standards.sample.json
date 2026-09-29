@@ -1,0 +1,31 @@
+[
+  {
+    "source_standard_number": "IS 1005:1992",
+    "source_standard_title": "Edible Maize Starch (Corn Flour) - Specification",
+    "clause": "Clause 2 Normative References",
+    "data_status": "SAMPLE - verify before use",
+    "last_extracted": "2026-09-28",
+    "extracted_by": "Sample Schema Generator",
+    "verification_status": "Sample Template - Needs verification against gazette before official use",
+    "allied_standards": [
+      {
+        "standard_number": "IS 4706 : Part 2",
+        "year": "1978",
+        "title": "Methods of test for edible starches and starch products: Part 2 Chemical methods",
+        "relationship_type": "test_method",
+        "mandatory": true,
+        "clause_reference": "Clause 2 / Clause 5.1",
+        "notes": "Moisture and total ash test procedure"
+      },
+      {
+        "standard_number": "IS 1070",
+        "year": "1992",
+        "title": "Reagent Grade Water - Specification",
+        "relationship_type": "test_method",
+        "mandatory": false,
+        "clause_reference": "Clause 2 / Clause 3.2",
+        "notes": "Purity of water for chemical reagent preparation"
+      }
+    ]
+  }
+]

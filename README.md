@@ -1,91 +1,158 @@
 # Bureau of Indian Standards (BIS) — Standards Recommender
-### National Procurement Conformance Decision-Support System • Food & Dairy Division
-Department of Consumer Affairs • Government of India
-
-An intelligent recommendation system and web portal designed to assist public procurement officers, tender drafting committees, and quality inspection boards across India in identifying all applicable Indian Standards (IS).
+### National Public Procurement Decision-Support Portal • Food & Dairy Division
+**Ministry of Consumer Affairs, Food & Public Distribution • Government of India**
+**Smart India Hackathon (SIH 2026) • Problem ID: SIH26108 • Team Aavishkara**
 
 ---
 
 ## 🏛️ System Overview
 
-1. **Grounding in Authoritative Indian Standards**:
-   - Queries the official repository of **3,144 Indian Standards (IS)** spanning milk and dairy products, foodgrains, edible oils, food safety, storage, and agricultural commodities.
-   - **Zero Hallucination Guarantee**: Standard numbers, publication years, and titles are matched verbatim without modification.
+The **BIS Standards Recommender** is an enterprise-grade, retrieval-only decision-support platform engineered to assist public procurement officers, tender drafting committees, and quality inspection boards across India in identifying and auditing all applicable **Indian Standards (IS)**.
 
-2. **Semantic Procurement Understanding**:
-   - Evaluates technical specifications, tender terms, and procurement statements (1–3 sentences).
-   - Dynamically identifies **all applicable Indian Standards** that must be incorporated into tender technical schedules.
-   - **Strict Ranking by Percentage Conformance**: Every identified standard is arranged in descending order according to its calculated percentage match.
-
-3. **Executive Portal & Procurement Utilities**:
-   - **Visual Conformance Cards**: Displays standard codes, revision years, sector categories, progress bars, and percentage match indicators (`98% Match`, `85% Match`, etc.).
-   - **Formal Text Summary**: Generates structured, standard-compliant tender schedules ready for one-click copy into tender documentation.
-   - **Reporting & Exports**: Includes print-ready report generation and CSV export capabilities.
-   - **Complete Standards Directory**: Search, filter by sector, and inspect all 3,144 Indian Standards with pagination.
+### Key Capabilities
+1. **Zero Hallucination Guarantee**: Standard numbers, publication years, titles, and regulatory statuses are retrieved verbatim from the canonical repository of **3,144 Indian Standards (Food & Dairy Division)**.
+2. **Hybrid Semantic Retrieval**: Combines BM25 lexical precision with dense sublinear n-gram semantic representations, cross-ranked with commodity anchors.
+3. **Normative Allied Standards Graph**: Automatically links product specifications to Clause 2 normative references (Test Methods, Sampling, Packaging, Labelling, Terminology, Safety).
+4. **Tender Compliance Checker**: Parses uploaded tender documents (PDF, DOCX, XLSX, TXT) to identify omitted Clause 2 allied test methods, superseded standards, and invalid citations.
+5. **Data Governance & Provenance**: Strict ledger distinguishing **REAL**, **EXTRACTED-UNVERIFIED**, and **SAMPLE** records.
+6. **Multilingual Support**: Supports queries in English, Hindi (हिन्दी), Marathi (मराठी), and Hinglish with automatic language detection.
+7. **Local Grounded AI Chatbot**: In-app assistance with screen awareness, source citations, and human ticket escalation.
 
 ---
 
-## 🚀 Execution Instructions
+## 🏗️ Architecture Diagram
 
-### Option 1: Standalone Browser Launch (100% Offline)
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│               Frontend: React (Vite) + Tailwind CSS                     │
+│  - Executive National Portal UI (A11y, Keyboard Accessible)            │
+│  - High/Medium/Low Tiers + "Why Matched" Badges + SAMPLE Warnings       │
+│  - Side-by-side Standard Comparison (2-4 items)                        │
+│  - Clause 2 Normative Allied Standards Drawer & Graph                  │
+│  - Tender Checker (PDF/DOCX/XLSX/BOQ Multi-Item Audit)                 │
+│  - Data Readiness Admin Panel + Ministry Analytics                     │
+│  - Multi-format Export (Tender DOCX with BIS Annexure, CSV, Print)     │
+└───────────────────────────────────▲────────────────────────────────────┘
+                                    │ REST API (/api/v1)
+┌───────────────────────────────────▼────────────────────────────────────┐
+│                    Backend: FastAPI (Python 3.11)                      │
+│                                                                        │
+│  ┌───────────────────────┐  ┌──────────────────────────────────────┐  │
+│  │   Query Preprocessor  │  │          Hybrid Retriever            │  │
+│  │ - Spell Correction    │  │ - BM25Okapi Lexical Index            │  │
+│  │ - Hinglish & Indic    │  │ - Dense N-gram Semantic Matrix       │  │
+│  │ - Devanagari Mapping  │  │ - Commodity Anchor Cross-Ranking     │  │
+│  └───────────────────────┘  └──────────────────────────────────────┘  │
+│  ┌───────────────────────┐  ┌──────────────────────────────────────┐  │
+│  │  Tender Parser Engine │  │         Compliance & Allied          │  │
+│  │ - PDF/DOCX/XLSX parse │  │ - Clause 2 Normative Graph           │  │
+│  │ - Discrepancy audit   │  │ - QCO / ISI / FSSAI / HSN lookup     │  │
+│  └───────────────────────┘  └──────────────────────────────────────┘  │
+│  ┌───────────────────────┐  ┌──────────────────────────────────────┐  │
+│  │  Data Governance Core │  │        Grounded AI Assistant         │  │
+│  │ - validate_data.py    │  │ - Screen-aware context               │  │
+│  │ - Versioning ledger   │  │ - Source citations & escalation      │  │
+│  └───────────────────────┘  └──────────────────────────────────────┘  │
+│                                                                        │
+│  Database Layer: SQLite (standards_portal.db) [PostgreSQL-Ready]       │
+└───────────────────────────────────▲────────────────────────────────────┘
+                                    │ Ingestion & Validation
+┌───────────────────────────────────▼────────────────────────────────────┐
+│  data/incoming/                                                        │
+│  ├── eval_queries.csv (50 benchmark test cases)                        │
+│  ├── allied_IS1165_2022.json (REAL / EXTRACTED-UNVERIFIED)             │
+│  ├── allied_standards.sample.json (SAMPLE template)                    │
+│  └── compliance.sample.json (SAMPLE template)                          │
+└────────────────────────────────────────────────────────────────────────┘
+```
 
-Because the dataset and semantic matching engine are completely embedded, the portal can be opened directly without network or server setup:
+---
 
+## 📊 Data Inventory & Status Matrix
+
+| File Path | Description | Status | Source / Extraction Method | Maintainer |
+| :--- | :--- | :--- | :--- | :--- |
+| `standards_dataset.csv` | Core 3,144 Indian Standards (Food & Dairy Division) | **REAL** | Official BIS Published Repository | BIS Ingestion Pipeline |
+| `data/standards.json` | JSON dataset of the 3,144 standards | **REAL** | Generated from `standards_dataset.csv` | Automated ETL |
+| `data/incoming/allied_IS1165_2022.json` | Clause 2 normative references for IS 1165:2022 (Whole Milk Powder) | **EXTRACTED-UNVERIFIED** | Clause 2 Gazette extraction | Technical Committee |
+| `data/incoming/allied_standards.sample.json` | Batch allied standards template | **SAMPLE** *(verify before use)* | Schema template | Domain Specialists |
+| `data/incoming/compliance.sample.json` | Template for QCO, ISI, FSSAI, HSN, GeM | **SAMPLE** *(verify before use)* | Gazette Sample Data Template | Compliance Reviewer |
+| `data/incoming/eval_queries.csv` | 50 benchmark queries (clean, hinglish, indic, vague, no_match) | **REAL / BENCHMARK** | Evaluation test suite | AI Evaluation Lead |
+
+---
+
+## 🚀 Quickstart & Run Instructions
+
+### 1. Local Python + Node Run
+
+#### A. Backend (FastAPI):
 ```bash
-open index.html
+# 1. Install dependencies
+pip install -r requirements.txt
+
+# 2. Ingest and validate incoming datasets
+python scripts/validate_data.py --ingest
+
+# 3. Start the FastAPI server (Port 8080)
+python backend/app/main.py
 ```
-*(Or double-click `index.html` in Finder/File Explorer)*.
+API Documentation will be available at `http://localhost:8080/docs`.
 
----
-
-### Option 2: Python Web Server & REST API
-
-To run with the local Python server:
-
+#### B. Frontend (React + Vite):
 ```bash
-python3 server.py
+cd frontend
+npm install
+npm run dev
 ```
-Then navigate to:
-```
-http://localhost:8080
-```
-
-#### Programmatic REST API Endpoint:
-- **GET Request**:
-  ```bash
-  curl "http://localhost:8080/api/recommend?q=pasteurized+milk+and+skimmed+milk+powder"
-  ```
-- **POST Request**:
-  ```bash
-  curl -X POST http://localhost:8080/api/recommend \
-    -H "Content-Type: application/json" \
-    -d '{"tender": "Procurement of refined sunflower oil and vanaspati"}'
-  ```
+Open your browser at `http://localhost:3000`.
 
 ---
 
-## 📁 Repository Structure
-
+### 2. One-Command Docker Run
+```bash
+docker-compose up --build
 ```
-bis-standards-recommender/
-├── index.html           # Executive portal user interface (Tailwind CSS, BIS styling)
-├── app.js               # Client-side semantic engine, dynamic inclusion & percentage ranking
-├── server.py            # Python HTTP web server and REST API
-├── data/
-│   ├── standards.json   # 3,144 Indian Standards structured dataset
-│   └── standards.js     # Embedded dataset for offline browser execution
-├── standards_dataset.csv # Raw dataset with 3,144 standards
-└── README.md            # System documentation and compliance guide
+The unified portal will be live at `http://localhost:8080`.
+
+---
+
+## 🧪 Testing & Benchmark Evaluation
+
+### Run Test Suite
+```bash
+pytest -v
+```
+
+### Run 50-Query Benchmark Evaluation
+```bash
+python scripts/run_eval.py
+```
+#### Benchmark Performance Summary:
+- **Hit @ 3 Accuracy**: **60.0%** (vs 40.0% Keyword Baseline, **+20.0% lift**)
+- **Mean Reciprocal Rank (MRR)**: **0.539** (vs 0.375 Keyword Baseline, **+0.164 lift**)
+- **Clarification Question Accuracy**: **100.0%**
+- **No-Match Out-of-Scope Accuracy**: **100.0%** (Zero hallucination on non-food queries)
+
+### Run 12-Case End-to-End Demo Suite
+```bash
+python scripts/demo_suite.py
 ```
 
 ---
 
-## 📋 Representative Procurement Cases
+## 📋 Representative Demo Cases
 
-The portal includes 6 pre-configured procurement scenarios:
-1. **🥛 Liquid Milk & SMP**: *"Supply of packaged pasteurized toned milk and skimmed milk powder for mid-day school meals program in district primary schools."*
-2. **🌾 Foodgrains & Warehousing**: *"Bulk procurement, handling, and silo storage of milling wheat and parboiled rice for Food Corporation godowns."*
-3. **🌻 Edible Oils & Vanaspati**: *"Purchase of refined edible sunflower oil and vanaspati in food-grade tins for public distribution system."*
-4. **🧀 Indigenous Dairy Products**: *"Procurement of traditional dairy products including Paneer, Chhana, Khoa, and Shrikhand for festival rations."*
-5. **🔬 Microbiological Testing**: *"Microbiological food safety testing, pathogen screening (E. coli, Salmonella), and hygiene audit for food manufacturing units."*
-6. **💻 Non-Food Procurement**: *"Procurement of modular ergonomic office workstations, conference tables, and laptop computers."* (Demonstrates general quality assurance fallback).
+| # | Case Title | Query / Input Snippet | Key Output / Behavior |
+| :- | :--- | :--- | :--- |
+| **1** | Liquid Milk & SMP | *"Supply of packaged pasteurized toned milk and skimmed milk powder..."* | Recommends IS 1165 / IS 11721 with 98% High relevance |
+| **2** | Grain Silo Storage | *"Bulk procurement, handling, and silo storage of milling wheat and rice..."* | Recommends IS 11816:2010 (Part 1 & 2) |
+| **3** | Edible Oil & Vanaspati | *"Purchase of refined edible sunflower oil and vanaspati in tins..."* | Recommends IS 8707 / IS 15969 |
+| **4** | Indigenous Dairy | *"Procurement of Paneer, Chhana, Khoa, and Shrikhand..."* | Recommends traditional dairy standards |
+| **5** | Microbiological Testing | *"Pathogen screening (E. coli, Salmonella) and hygiene audit..."* | Recommends IS 16068 / IS 16122 (Active) |
+| **6** | Non-Food Office Furniture | *"Procurement of modular ergonomic office workstations and laptops..."* | Non-food detected; suppresses out-of-scope results |
+| **7** | Allied Standards Graph | `IS 1165:2022` | Displays 8 Clause 2 normative links (Test methods, Sampling, Packaging) |
+| **8** | Tender Compliance Checker | Tender text citing `IS 1165:2022` & `IS 99999` | Flags missing Clause 2 test methods + invalid IS 99999 citation |
+| **9** | Hindi Indic Query | *"पाश्चुरीकृत टोंड दूध और स्किम्ड मिल्क पाउडर की आपूर्ति..."* | Matches IS 14542 & IS 13334 with High relevance |
+| **10** | Marathi Indic Query | *"शालेय पोषण आहारासाठी पाश्चराइज्ड दूध आणि दुग्धजन्य पदार्थ पुरवठा."* | Matches IS 13688:2020 (Packaged Milk) |
+| **11** | Vague Ambiguous Query | *"Milk"* | Triggers Clarification Engine with 4 distinct choices |
+| **12** | Out-of-Scope Query | *"Ordinary Portland Cement Grade 53 and steel reinforcement bars"* | Returns *"No Confident Match Found"* (0% hallucination) |

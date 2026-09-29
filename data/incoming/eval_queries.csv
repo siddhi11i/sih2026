@@ -1,0 +1,51 @@
+id,query,category,language,expected_outcome,expected_standard_numbers,clarifying_topic,notes
+1,Supply of packaged pasteurized toned milk and skimmed milk powder for mid-day school meals,clean,en,match,"IS 1165, IS 11721",,Liquid & dried dairy procurement
+2,Bulk procurement handling and silo storage of milling wheat and parboiled rice for Food Corporation godowns,clean,en,match,"IS 11816 : Part 1, IS 11816 : PART 2",,Cereals & storage
+3,Purchase of refined edible sunflower oil and vanaspati in food-grade tins for public distribution system,clean,en,match,"IS 8707, IS 15969",,Edible oils
+4,Procurement of traditional dairy products including Paneer Chhana Khoa and Shrikhand for festival rations,clean,en,match,"IS 11721, IS 11762",,Traditional dairy
+5,Microbiological food safety testing pathogen screening E coli Salmonella and hygiene audit for food manufacturing units,clean,en,match,"IS 16068, IS 16122 - (Active), IS/ISO/TS 22002 : Part 1",,Food safety testing
+6,Strawberries guide to cold storage and post-harvest preservation,clean,en,match,"IS 16118",,Cold storage
+7,Edible maize starch corn flour specification for industrial food processing,clean,en,match,"IS 1005",,Starch
+8,Animal-drawn ridger share agricultural implement specification,clean,en,match,"IS 10254",,Agri machinery
+9,Methods for assessment of post harvest grain losses by rodents part 1 and part 2,clean,en,match,"IS 11261 : Part 1, IS 11261 : Part 2",,Rodent loss assessment
+10,Tobacco and tobacco products determination of organochlorine pesticide residues gas chromatographic method,clean,en,match,"IS 11820",,Pesticide testing
+11,Tractors for agriculture and forestry roll-over protective structures ROPS dynamic test method,clean,en,match,"IS 11821 : Part 1, IS 11821 : Part 2",,Tractor ROPS
+12,Sucralose food grade additive for nutritional formulations,clean,en,match,"IS 15969",,Food additive
+13,Acesulfame potassium food grade artificial sweetener,clean,en,match,"IS 15970",,Sweetener
+14,Dried milk and dried milk products determination of fat content gravimetric reference method,clean,en,match,"IS 11721",,Fat determination
+15,Evaporated milk and sweetened condensed milk fat content gravimetric method,clean,en,match,"IS 11762",,Condensed milk testing
+16,Traceability in the feed and food chain general principles and basic requirements,clean,en,match,"IS/ISO 22005",,Traceability
+17,Coconut milk powder specification and shelf life criteria,clean,en,match,"IS 16116",,Coconut milk powder
+18,Temephos technical grade for vector control in food storage,clean,en,match,"IS 8701",,Vector control
+19,Bromadiolone rodenticide bait for warehouse pest management,clean,en,match,"IS 12912",,Pest control
+20,Storage of cereals and pulses part 3 control of attack by pests,clean,en,match,"IS 11816 : Part 3",,Storage pest control
+21,paschurised toned dudh aur skimmed doodh powder khareedna hai school ke liye,misspelled_hinglish,hinglish,match,"IS 1165, IS 11721",,Hinglish milk powder
+22,suji maida aur gehu atta supply tender for military canteen,misspelled_hinglish,hinglish,match,"IS 1005, IS 11816 : Part 1",,Hinglish flour
+23,refined surajmukhi tel aur vanaspati ghee purchase for ration,misspelled_hinglish,hinglish,match,"IS 8707, IS 15969",,Hinglish edible oil
+24,paneer chana mawa khoa and shrikhand supply for canteens,misspelled_hinglish,hinglish,match,"IS 11721, IS 11762",,Hinglish indigenous dairy
+25,godam me chawal aur gehu ke silo storage ki technical specifications,misspelled_hinglish,hinglish,match,"IS 11816 : Part 1, IS 11816 : PART 2",,Hinglish warehousing
+26,whol milk powdr packagng and fssai complianc,misspelled_hinglish,hinglish,match,"IS 1165",,Spelling errors
+27,edibl maiz strch cornflour testing lab spec,misspelled_hinglish,hinglish,match,"IS 1005",,Spelling errors
+28,salmonela aur coliform bacteria check in dairy plants,misspelled_hinglish,hinglish,match,"IS 16068, IS 16122 - (Active)",,Hinglish microbiology
+29,traktor safety frame rops static test specification,misspelled_hinglish,hinglish,match,"IS 11821 : Part 2",,Hinglish agri safety
+30,drinking water test bacteria screening colony count method,misspelled_hinglish,hinglish,match,"IS 16068, IS 16122 - (Active)",,Water microbiology
+31,पाश्चुरीकृत टोंड दूध और स्किम्ड मिल्क पाउडर की आपूर्ति प्राथमिक विद्यालयों के लिए,indic,hi,match,"IS 1165, IS 11721",,Hindi dairy procurement
+32,अनाज और दालों का सुरक्षित भंडारण तथा साइलो गोदाम आवश्यकताएं,indic,hi,match,"IS 11816 : Part 1, IS 11816 : PART 2",,Hindi grain storage
+33,खाद्य तेल वनस्पति और परिष्कृत सूरजमुखी तेल की सार्वजनिक खरीद,indic,hi,match,"IS 8707, IS 15969",,Hindi edible oil
+34,डेयरी उत्पादों के लिए सूक्ष्मजीवविज्ञानी परीक्षण और साल्मोनेला जांच,indic,hi,match,"IS 16068, IS 16122 - (Active)",,Hindi microbiology
+35,मका स्टार्च आणि कॉर्न फ्लोअर गुणवत्ता मानके,indic,mr,match,"IS 1005",,Marathi maize starch
+36,शालेय पोषण आहारासाठी पाश्चराइज्ड दूध आणि दुग्धजन्य पदार्थ पुरवठा,indic,mr,match,"IS 1165, IS 11721",,Marathi dairy procurement
+37,धान्य आणि कडधान्य साठवणूक तंत्रज्ञान आणि कीटक नियंत्रण,indic,mr,match,"IS 11816 : Part 3",,Marathi grain pest control
+38,कृषी ट्रॅक्टर सुरक्षा तपासणी आणि रोल-ओव्हर चाचणी,indic,mr,match,"IS 11821 : Part 1",,Marathi tractor safety
+39,मिल्क पावडर फॅट तपासणीसाठी रासायनिक विश्लेषण पद्धती,indic,hi,match,"IS 11721",,Hindi fat analysis
+40,गोदाम धान्य साठवणूक आणि उंदीर नियंत्रण पद्धती,indic,mr,match,"IS 11261 : Part 1",,Marathi rodent control
+41,Milk,vague,en,clarify,,product_variety_and_packaging,Ambiguous dairy item
+42,Starch,vague,en,clarify,,edible_vs_industrial,Ambiguous starch grade
+43,Oil purchase tender,vague,en,clarify,,oil_type_and_packaging,Ambiguous edible oil
+44,Sugar for canteen,vague,en,clarify,,sugar_grade_and_form,Ambiguous sugar spec
+45,Grain storage equipment,vague,en,clarify,,storage_capacity_and_type,Ambiguous grain storage
+46,Procurement of modular ergonomic office workstations conference tables and executive swivel chairs,no_match,en,no_match,,,Office furniture
+47,Supply of high-performance laptop computers laser printers and network switches for IT department,no_match,en,no_match,,,IT hardware
+48,Supply of Ordinary Portland Cement Grade 53 and structural reinforcement steel bars for civil construction,no_match,en,no_match,,,Civil construction materials
+49,Procurement of surgical gloves disposable gowns and N95 respiratory masks for municipal hospital,no_match,en,no_match,,,Medical supplies
+50,Purchase of 4x4 diesel utility vehicles and passenger ambulances for health department fleet,no_match,en,no_match,,,Automobile fleet

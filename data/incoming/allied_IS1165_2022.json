@@ -1,0 +1,83 @@
+{
+  "source_standard_number": "IS 1165:2022",
+  "source_standard_title": "Whole Milk Powder - Specification (Sixth Revision)",
+  "clause": "Clause 2 Normative References",
+  "data_status": "EXTRACTED-UNVERIFIED",
+  "last_extracted": "2026-09-28",
+  "extracted_by": "Aavishkara Extraction Pipeline (Clause 2)",
+  "verification_status": "Extracted from official BIS Gazette text Clause 2; pending committee formal sign-off",
+  "allied_standards": [
+    {
+      "standard_number": "IS 11721",
+      "year": "2013",
+      "title": "Dried Milk and Dried Milk Products - Determination of Fat Content - Gravimetric Method (Reference Method)",
+      "relationship_type": "test_method",
+      "mandatory": true,
+      "clause_reference": "Clause 2 / Clause 6.1 (Fat Determination)",
+      "notes": "Reference gravimetric Rose-Gottlieb method for milk fat in whole milk powder"
+    },
+    {
+      "standard_number": "IS 11623",
+      "year": "2008",
+      "title": "Method for Determination of Moisture in Milk Powder and Similar Products",
+      "relationship_type": "test_method",
+      "mandatory": true,
+      "clause_reference": "Clause 2 / Clause 6.2 (Moisture Determination)",
+      "notes": "Oven drying reference method for moisture content calculation"
+    },
+    {
+      "standard_number": "IS 5402",
+      "year": "2012",
+      "title": "Microbiology of Food and Animal Feeding Stuffs - Horizontal Method for the Enumeration of Microorganisms - Colony Count Technique at 30 Degree C",
+      "relationship_type": "safety",
+      "mandatory": true,
+      "clause_reference": "Clause 2 / Clause 5.4 (Microbiological Safety)",
+      "notes": "Standard plate count specification limit for whole milk powder"
+    },
+    {
+      "standard_number": "IS 5403",
+      "year": "1999",
+      "title": "Method for Determination of Yeast and Mould Count in Foodstuffs",
+      "relationship_type": "safety",
+      "mandatory": true,
+      "clause_reference": "Clause 2 / Clause 5.4 (Microbiological Parameters)",
+      "notes": "Detection and limit enumeration for fungal/yeast contamination"
+    },
+    {
+      "standard_number": "IS 11536",
+      "year": "2007",
+      "title": "Processed Cereal Based Complementary Foods - Specification",
+      "relationship_type": "related_product",
+      "mandatory": false,
+      "clause_reference": "Clause 2 / Informative",
+      "notes": "Allied formulation guideline when whole milk powder is used as an infant weaning ingredient"
+    },
+    {
+      "standard_number": "IS 10030",
+      "year": "1981",
+      "title": "Methods for Sensory Evaluation of Milk Powder",
+      "relationship_type": "terminology",
+      "mandatory": false,
+      "clause_reference": "Clause 2 / Clause 4.1 (Organoleptic Requirements)",
+      "notes": "Sensory evaluation score card and defect classification"
+    },
+    {
+      "standard_number": "IS 10173",
+      "year": "1982",
+      "title": "Guide on Requirements for Packing of Milk and Milk Products",
+      "relationship_type": "packaging",
+      "mandatory": true,
+      "clause_reference": "Clause 2 / Clause 7 (Packing and Marking)",
+      "notes": "Food-grade nitrogen flushed hermetic packing specification"
+    },
+    {
+      "standard_number": "IS 11546",
+      "year": "2012",
+      "title": "Milk and Milk Products - Guidance on Sampling",
+      "relationship_type": "sampling",
+      "mandatory": true,
+      "clause_reference": "Clause 2 / Clause 8 (Sampling and Criteria for Conformity)",
+      "notes": "Representative batch lot size and scale of sampling for dried milk"
+    }
+  ]
+}
