@@ -50,6 +50,7 @@ app.add_api_route("/api/recommend", recommend_post, methods=["POST"], include_in
 app.add_api_route("/api/recommend", recommend_get, methods=["GET"], include_in_schema=False)
 app.add_api_route("/api/standards", list_standards, methods=["GET"], include_in_schema=False)
 
+@app.get("/", tags=["Health"])
 @app.get("/health", tags=["Health"])
 @app.get("/api/v1/health", tags=["Health"])
 def health_check():
@@ -59,6 +60,8 @@ def health_check():
         "version": settings.VERSION,
         "team": "Aavishkara (SIH26108)",
         "standards_indexed": 3144,
+        "docs_url": "/docs",
+        "api_v1_base": settings.API_V1_STR,
         "bhashini_enabled": settings.ENABLE_BHASHINI,
         "local_model_only": settings.LOCAL_MODEL_ONLY
     }
