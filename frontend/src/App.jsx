@@ -16,7 +16,7 @@ import AnalyticsView from './components/AnalyticsView';
 import ChatbotWidget from './components/ChatbotWidget';
 import GuidedTourModal from './components/GuidedTourModal';
 import OfficialLoginModal from './components/OfficialLoginModal';
-import { fetchApi } from './api';
+import { fetchApi, API_BASE } from './api';
 import { getTranslation, LANGUAGE_SCENARIO_PRESETS } from './i18n';
 import { AlertTriangle, AlertCircle, RefreshCw, BookOpen, CheckCircle2, Sparkles, ArrowRight } from 'lucide-react';
 
@@ -163,18 +163,25 @@ export default function App() {
 
   const handleExportDocx = async () => {
     try {
-      const res = await fetch('/api/v1/export/docx', {
+      const tenderQuery = query?.trim() || 'Food and Dairy BIS Standards Procurement Schedule';
+      const res = await fetch(`${API_BASE}/export/docx`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tender: query, top_k: 12 })
+        body: JSON.stringify({ tender: tenderQuery, top_k: 25 })
       });
-      if (!res.ok) throw new Error("DOCX export failed");
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`DOCX export failed (${res.status}): ${errText || res.statusText}`);
+      }
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = "BIS_Standards_Annexure.docx";
+      document.body.appendChild(a);
       a.click();
+      a.remove();
+      setTimeout(() => window.URL.revokeObjectURL(url), 1000);
     } catch (e) {
       console.error(e);
       setErrorMessage(e.message);
@@ -183,18 +190,25 @@ export default function App() {
 
   const handleExportCsv = async () => {
     try {
-      const res = await fetch('/api/v1/export/csv', {
+      const tenderQuery = query?.trim() || 'Food and Dairy BIS Standards Procurement Schedule';
+      const res = await fetch(`${API_BASE}/export/csv`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tender: query, top_k: 12 })
+        body: JSON.stringify({ tender: tenderQuery, top_k: 25 })
       });
-      if (!res.ok) throw new Error("CSV export failed");
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`CSV export failed (${res.status}): ${errText || res.statusText}`);
+      }
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = "BIS_Standards_Schedule.csv";
+      document.body.appendChild(a);
       a.click();
+      a.remove();
+      setTimeout(() => window.URL.revokeObjectURL(url), 1000);
     } catch (e) {
       console.error(e);
       setErrorMessage(e.message);
